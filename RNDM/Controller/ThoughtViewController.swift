@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Firebase
+import FirebaseFirestore
 
 extension UIColor {
     static var customOrange = UIColor(red: 0.961, green: 0.510, blue: 0.047, alpha: 1.0)
@@ -27,7 +27,7 @@ extension UISegmentedControl {
 
 class ThoughtViewController: UIViewController, UITextViewDelegate {
     
-    private var selectedCategory = "funny"
+    private var selectedCategory = ThoughtCategory.funny.rawValue
     
     private let segmentedControl: UISegmentedControl = {
         let items = ["funny", "serious", "crazy"]
@@ -36,8 +36,20 @@ class ThoughtViewController: UIViewController, UITextViewDelegate {
         sc.backgroundColor = .customOrange
         sc.defaultConfiguration()
         sc.selectedConfiguration()
+        sc.addTarget(self, action: #selector(categoryChanged(_:)), for: .valueChanged)
         return sc
     }()
+    
+    @objc func categoryChanged(_ sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+        case 0:
+            selectedCategory = ThoughtCategory.funny.rawValue
+        case 1:
+            selectedCategory = ThoughtCategory.serious.rawValue
+        default:
+            selectedCategory = ThoughtCategory.crazy.rawValue
+        }
+    }
     
     private let usernameTextField: UITextField = {
         let field = UITextField()
@@ -47,7 +59,7 @@ class ThoughtViewController: UIViewController, UITextViewDelegate {
         return field
     }()
     
-    private let thoughtText: UITextView = {
+    private let thoughtTextView: UITextView = {
         let textView = UITextView()
         textView.font = UIFont(name: "AvenirNext", size: 14)
         textView.backgroundColor = UIColor(red: 0.667, green: 0.667, blue: 0.667, alpha: 0.15)
@@ -58,17 +70,19 @@ class ThoughtViewController: UIViewController, UITextViewDelegate {
     }()
     
     @objc func postButtonTapped() {
-        Firestore.firestore().collection("thoughts").addDocument(data: [
-            "category": selectedCategory,
-            "numComments": 0,
-            "numLikes": 0,
-            "thoughtText": thoughtText.text!,
-            "timestamp": FieldValue.serverTimestamp(),
-            "username": usernameTextField.text!
+        guard let username = usernameTextField.text else { return }
+        guard let thoughtText = thoughtTextView.text else { return }
+        print("Post button tapped")
+        Firestore.firestore().collection(THOUGHTS_REF).addDocument(data: [
+            CATEGORY: selectedCategory,
+            NUM_COMMENTS: 0,
+            NUM_LIKES: 0,
+            THOUGHT_TXT: thoughtText,
+            TIMESTAMP: FieldValue.serverTimestamp(),
+            USERNAME: username
         ]) { (err) in
             if let err = err {
-                debugPrint("Error adding document: \(err)")
-                print("Error")
+                print("Error adding document: \(err)")
             } else {
                 self.navigationController?.popViewController(animated: true)
                 print("Works")
@@ -87,6 +101,17 @@ class ThoughtViewController: UIViewController, UITextViewDelegate {
         return button
     }()
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .white
+        view.addSubview(segmentedControl)
+        view.addSubview(thoughtTextView)
+        view.addSubview(usernameTextField)
+        view.addSubview(postButton)
+        thoughtTextView.delegate = self
+        setupLayout()
+    }
+    
     func textViewDidBeginEditing(_ textView: UITextView) {
         textView.text = ""
         textView.textColor = .darkGray
@@ -104,29 +129,20 @@ class ThoughtViewController: UIViewController, UITextViewDelegate {
         usernameTextField.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
         usernameTextField.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20).isActive = true
 
-        thoughtText.translatesAutoresizingMaskIntoConstraints = false
-        thoughtText.topAnchor.constraint(equalTo: usernameTextField.bottomAnchor, constant: 12).isActive = true
-        thoughtText.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
-        thoughtText.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20).isActive = true
-        thoughtText.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        thoughtTextView.translatesAutoresizingMaskIntoConstraints = false
+        thoughtTextView.topAnchor.constraint(equalTo: usernameTextField.bottomAnchor, constant: 12).isActive = true
+        thoughtTextView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
+        thoughtTextView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20).isActive = true
+        thoughtTextView.heightAnchor.constraint(equalToConstant: 100).isActive = true
         
         postButton.translatesAutoresizingMaskIntoConstraints = false
-        postButton.topAnchor.constraint(equalTo: thoughtText.bottomAnchor, constant: 8).isActive = true
+        postButton.topAnchor.constraint(equalTo: thoughtTextView.bottomAnchor, constant: 8).isActive = true
         postButton.widthAnchor.constraint(equalToConstant: 80).isActive = true
         postButton.heightAnchor.constraint(equalToConstant: 35).isActive = true
         postButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
 
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .white
-        view.addSubview(segmentedControl)
-        view.addSubview(thoughtText)
-        view.addSubview(usernameTextField)
-        view.addSubview(postButton)
-        thoughtText.delegate = self
-        setupLayout()
-    }
+    
 
 }

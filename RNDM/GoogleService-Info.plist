@@ -3,34 +3,34 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>924079454639-7e405it1m65guji28ld1fccr1mp9mqr4.apps.googleusercontent.com</string>
+	<string>260929350041-0vlmdjl3drne9kcrrd6u5tbtj9feg2fj.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.924079454639-7e405it1m65guji28ld1fccr1mp9mqr4</string>
+	<string>com.googleusercontent.apps.260929350041-0vlmdjl3drne9kcrrd6u5tbtj9feg2fj</string>
 	<key>API_KEY</key>
-	<string>AIzaSyAmWUH28Lxf0YoxGm7tz4GDoRygnSU0uAw</string>
+	<string>AIzaSyCGB7humoNhSCmbHiqtwJ_B4CogkA_Lrss</string>
 	<key>GCM_SENDER_ID</key>
-	<string>924079454639</string>
+	<string>260929350041</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>belizyilmaz.RNDM</string>
 	<key>PROJECT_ID</key>
-	<string>rndm-fcace</string>
+	<string>rndm-96291</string>
 	<key>STORAGE_BUCKET</key>
-	<string>rndm-fcace.appspot.com</string>
+	<string>rndm-96291.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
-	<true/>
+	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
-	<false/>
+	<false></false>
 	<key>IS_APPINVITE_ENABLED</key>
-	<false/>
+	<true></true>
 	<key>IS_GCM_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>IS_SIGNIN_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:924079454639:ios:ccdfe1e870428db774575a</string>
+	<string>1:260929350041:ios:fe93c857f23d07b0bdcb08</string>
 	<key>DATABASE_URL</key>
-	<string>https://rndm-fcace.firebaseio.com</string>
+	<string>https://rndm-96291.firebaseio.com</string>
 </dict>
 </plist>
