@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 extension UIColor {
     static var customOrange = UIColor(red: 0.961, green: 0.510, blue: 0.047, alpha: 1.0)
@@ -25,6 +26,8 @@ extension UISegmentedControl {
 }
 
 class ThoughtViewController: UIViewController, UITextViewDelegate {
+    
+    private var selectedCategory = "funny"
     
     private let segmentedControl: UISegmentedControl = {
         let items = ["funny", "serious", "crazy"]
@@ -54,8 +57,28 @@ class ThoughtViewController: UIViewController, UITextViewDelegate {
         return textView
     }()
     
+    @objc func postButtonTapped() {
+        Firestore.firestore().collection("thoughts").addDocument(data: [
+            "category": selectedCategory,
+            "numComments": 0,
+            "numLikes": 0,
+            "thoughtText": thoughtText.text!,
+            "timestamp": FieldValue.serverTimestamp(),
+            "username": usernameTextField.text!
+        ]) { (err) in
+            if let err = err {
+                debugPrint("Error adding document: \(err)")
+                print("Error")
+            } else {
+                self.navigationController?.popViewController(animated: true)
+                print("Works")
+            }
+        }
+    }
+    
     private let postButton: UIButton = {
         let button = UIButton()
+        button.addTarget(self, action: #selector(postButtonTapped), for: .touchUpInside)
         button.setTitle("Post", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont(name: "AvenirNext-Medium", size: 17)
@@ -65,8 +88,8 @@ class ThoughtViewController: UIViewController, UITextViewDelegate {
     }()
     
     func textViewDidBeginEditing(_ textView: UITextView) {
-        thoughtText.text = ""
-        thoughtText.textColor = .darkGray
+        textView.text = ""
+        textView.textColor = .darkGray
     }
     
     private func setupLayout() {
