@@ -119,7 +119,7 @@ class ThoughtViewController: UIViewController, UITextViewDelegate {
     
     private func setupLayout() {
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false
-        segmentedControl.topAnchor.constraint(equalTo: view.topAnchor, constant: 80).isActive = true
+        segmentedControl.topAnchor.constraint(equalTo: view.topAnchor, constant: 100).isActive = true
         segmentedControl.heightAnchor.constraint(equalToConstant: 32).isActive = true
         segmentedControl.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20).isActive = true
         segmentedControl.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
