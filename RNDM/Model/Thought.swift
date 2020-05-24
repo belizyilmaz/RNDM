@@ -28,15 +28,4 @@ class Thought {
         self.documentId = documentId
     }
 }
-/*
-    struct Thought {
-        let username: String?
-        let timestamp: Date?
-        let thoughtText: String?
-        let numLikes: Int?
-        let numComments: Int?
-        let documentId: String?
-    }
-    */
-  
 
