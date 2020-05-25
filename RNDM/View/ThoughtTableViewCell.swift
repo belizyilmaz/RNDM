@@ -8,27 +8,11 @@
 
 import Foundation
 import UIKit
+import Firebase
 
 class ThoughtTableViewCell: UITableViewCell {
     
-    var thought: Thought? {
-        didSet {
-            guard let thoughtItem = thought else { return }
-            if let username = thoughtItem.username {
-                usernameLabel.text = username
-            }
-            if let thoughtText = thoughtItem.thoughtText {
-                thoughtLabel.text = thoughtText
-            }
-            if let timestamp = thoughtItem.timestamp {
-                timestampLabel.text = "\(timestamp)"
-            }
-            if let numLikes = thoughtItem.numLikes {
-                likesImageView.image = UIImage(named: "starIconFilled")
-                likesNumLabel.text = "\(numLikes)"
-            }
-        }
-    }
+    private var thought: Thought!
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -41,6 +25,10 @@ class ThoughtTableViewCell: UITableViewCell {
         self.contentView.addSubview(likesNumLabel)
         selectionStyle = .none
         setupTableViewCell()
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(likeTapped))
+        likesImageView.addGestureRecognizer(tap)
+        likesImageView.isUserInteractionEnabled = true
      }
 
      required init?(coder aDecoder: NSCoder) {
@@ -86,10 +74,21 @@ class ThoughtTableViewCell: UITableViewCell {
         return label
     }()
     
+    @objc func likeTapped() {
+        Firestore.firestore().document("thoughts/\(thought.documentId!)")
+        .updateData([NUM_LIKES : thought.numLikes + 1])
+    }
+    
     func configureCell(thought: Thought) {
+        self.thought = thought
         usernameLabel.text = thought.username
         thoughtLabel.text = thought.thoughtText
         likesNumLabel.text = String(thought.numLikes)
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM d, hh:mm"
+        let timestamp = formatter.string(from: thought.timestamp)
+        timestampLabel.text = timestamp
     }
     
     func setupTableViewCell() {

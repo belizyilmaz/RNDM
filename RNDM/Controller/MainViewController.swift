@@ -22,6 +22,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     private var selectedCategory = ThoughtCategory.funny.rawValue
     private var thoughtsCollectionRef: CollectionReference!    
     private var thoughts = [Thought]()
+    private var thoughtsListener: ListenerRegistration!
     
     private let segmentedControl: UISegmentedControl = {
         let items = ["funny", "serious", "crazy", "popular"]
@@ -35,26 +36,42 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     }()
     
     override func viewWillAppear(_ animated: Bool) {
-        thoughtsCollectionRef.getDocuments { (snapshot, error) in
-            if let err = error {
-                debugPrint("error catching docs: \(err)")
-            } else {
-                guard let snap = snapshot else { return }
-                for document in snap.documents {
-                    let data = document.data()
-                    let username = data[USERNAME] as? String ?? "Anonymous"
-                    let timestamp = data[TIMESTAMP] as? Date ?? Date()
-                    let thoughtText = data[THOUGHT_TXT] as? String ?? ""
-                    let numLikes = data[NUM_LIKES] as? Int ?? 0
-                    let numComments = data[NUM_COMMENTS] as? Int ?? 0
-                    let documentId = document.documentID
-                    
-                    let newThought = Thought(username: username, timestamp: timestamp, thoughtText: thoughtText, numLikes: numLikes, numComments: numComments, documentId: documentId)
-                    self.thoughts.append(newThought)
+        setListener()
+    }
+    
+    func setListener() {
+        if selectedCategory == ThoughtCategory.popular.rawValue {
+            thoughtsListener = thoughtsCollectionRef
+                .order(by: NUM_LIKES, descending: true)
+                .addSnapshotListener {
+                (snapshot, error) in
+                if let err = error {
+                    debugPrint("error catching docs: \(err)")
+                } else {
+                    self.thoughts.removeAll()
+                    self.thoughts = Thought.parseData(snapshot: snapshot)
+                    self.thoughtTableView.reloadData()
                 }
-                self.thoughtTableView.reloadData()
+            }
+        } else {
+            thoughtsListener = thoughtsCollectionRef
+                .whereField(CATEGORY, isEqualTo: selectedCategory)
+                .order(by: TIMESTAMP, descending: true)
+                .addSnapshotListener {
+                (snapshot, error) in
+                if let err = error {
+                    debugPrint("error catching docs: \(err)")
+                } else {
+                    self.thoughts.removeAll()
+                    self.thoughts = Thought.parseData(snapshot: snapshot)
+                    self.thoughtTableView.reloadData()
+                }
             }
         }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        thoughtsListener.remove()
     }
     
     override func viewDidLoad() {
@@ -69,16 +86,18 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
   
     @objc func categoryChangedInMain(_ sender: UISegmentedControl) {
-          switch sender.selectedSegmentIndex {
+        switch sender.selectedSegmentIndex {
         case 0:
             selectedCategory = ThoughtCategory.funny.rawValue
         case 1:
             selectedCategory = ThoughtCategory.serious.rawValue
         case 2:
-            selectedCategory = ThoughtCategory.popular.rawValue
-        default:
             selectedCategory = ThoughtCategory.crazy.rawValue
+        default:
+            selectedCategory = ThoughtCategory.popular.rawValue
         }
+        thoughtsListener.remove()
+        setListener()
     }
     
     @objc func addThought() {
