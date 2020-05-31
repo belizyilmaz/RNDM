@@ -12,6 +12,8 @@
 		381F60032431484900D3FD27 /* ThoughtViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381F60022431484900D3FD27 /* ThoughtViewController.swift */; };
 		3839F65224329818008180A3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3839F65124329817008180A3 /* GoogleService-Info.plist */; };
 		3839F6552432BB95008180A3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3839F6542432BB95008180A3 /* Constants.swift */; };
+		385783282483BD1F008088F0 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385783272483BD1F008088F0 /* LoginViewController.swift */; };
+		3857832A2483C50D008088F0 /* CreateUserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385783292483C50D008088F0 /* CreateUserVC.swift */; };
 		38BF1210246B17850055BD5E /* ThoughtTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BF120F246B17850055BD5E /* ThoughtTableViewCell.swift */; };
 		38BF1212246B2C670055BD5E /* Thought.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BF1211246B2C670055BD5E /* Thought.swift */; };
 		38C8FECB243127EA00B64979 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C8FECA243127EA00B64979 /* AppDelegate.swift */; };
@@ -28,6 +30,8 @@
 		381F60022431484900D3FD27 /* ThoughtViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThoughtViewController.swift; sourceTree = "<group>"; };
 		3839F65124329817008180A3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3839F6542432BB95008180A3 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		385783272483BD1F008088F0 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		385783292483C50D008088F0 /* CreateUserVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateUserVC.swift; sourceTree = "<group>"; };
 		38BF120F246B17850055BD5E /* ThoughtTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThoughtTableViewCell.swift; sourceTree = "<group>"; };
 		38BF1211246B2C670055BD5E /* Thought.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Thought.swift; sourceTree = "<group>"; };
 		38C8FEC7243127EA00B64979 /* RNDM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RNDM.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -76,6 +80,8 @@
 			children = (
 				381F60022431484900D3FD27 /* ThoughtViewController.swift */,
 				381F5FFE2431415100D3FD27 /* MainViewController.swift */,
+				385783272483BD1F008088F0 /* LoginViewController.swift */,
+				385783292483C50D008088F0 /* CreateUserVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -257,6 +263,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				385783282483BD1F008088F0 /* LoginViewController.swift in Sources */,
+				3857832A2483C50D008088F0 /* CreateUserVC.swift in Sources */,
 				38BF1210246B17850055BD5E /* ThoughtTableViewCell.swift in Sources */,
 				381F60032431484900D3FD27 /* ThoughtViewController.swift in Sources */,
 				38C8FECB243127EA00B64979 /* AppDelegate.swift in Sources */,

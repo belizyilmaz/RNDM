@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import FirebaseAuth
 
 enum ThoughtCategory : String {
     case funny = "funny"
@@ -23,6 +24,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     private var thoughtsCollectionRef: CollectionReference!    
     private var thoughts = [Thought]()
     private var thoughtsListener: ListenerRegistration!
+    private var handle: AuthStateDidChangeListenerHandle?
     
     private let segmentedControl: UISegmentedControl = {
         let items = ["funny", "serious", "crazy", "popular"]
@@ -34,10 +36,6 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         sc.addTarget(self, action: #selector(categoryChangedInMain(_:)), for: .valueChanged)
         return sc
     }()
-    
-    override func viewWillAppear(_ animated: Bool) {
-        setListener()
-    }
     
     func setListener() {
         if selectedCategory == ThoughtCategory.popular.rawValue {
@@ -70,19 +68,32 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        thoughtsListener.remove()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         
-        addButton()
+        addButtons()
         setupLayout()
         setupTableView()
         
         thoughtsCollectionRef = Firestore.firestore().collection(THOUGHTS_REF)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        handle = Auth.auth().addStateDidChangeListener({ (auth, user) in
+            if user == nil {
+                let loginVC = LoginViewController()
+                self.present(loginVC, animated: true, completion: nil)
+            } else {
+                self.setListener()
+            }
+        })
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        if thoughtsListener != nil {
+            thoughtsListener.remove()
+        }
     }
   
     @objc func categoryChangedInMain(_ sender: UISegmentedControl) {
@@ -105,9 +116,20 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         navigationController?.pushViewController(thoughtViewController, animated: true)
     }
     
-    private func addButton() {
+    private func addButtons() {
         let thoughtButton = UIBarButtonItem(image: UIImage(named: "addThoughtIcon"), style: .done, target: self, action: #selector(addThought))
+        let signoutButton = UIBarButtonItem(title: "Logout", style: .done, target: self, action: #selector(logoutButtonTapped))
         self.navigationItem.rightBarButtonItem  = thoughtButton
+        self.navigationItem.leftBarButtonItem = signoutButton
+    }
+    
+    @objc private func logoutButtonTapped() {
+        let firebaseAuth = Auth.auth()
+        do {
+            try firebaseAuth.signOut()
+        } catch let signoutError as NSError {
+            debugPrint("Error signing out: \(signoutError)")
+        }
     }
     
     private func setupLayout() {
