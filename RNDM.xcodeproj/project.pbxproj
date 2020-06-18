@@ -10,6 +10,10 @@
 		381F5FFF2431415100D3FD27 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381F5FFE2431415100D3FD27 /* MainViewController.swift */; };
 		381F60012431434A00D3FD27 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381F60002431434A00D3FD27 /* NavigationController.swift */; };
 		381F60032431484900D3FD27 /* ThoughtViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381F60022431484900D3FD27 /* ThoughtViewController.swift */; };
+		3823ABDB249B63230059BDD9 /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3823ABDA249B63230059BDD9 /* CommentTableViewCell.swift */; };
+		3823ABDD249B72B10059BDD9 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3823ABDC249B72B10059BDD9 /* Comment.swift */; };
+		3823ABDF249BBFB30059BDD9 /* KeyboardBoundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3823ABDE249BBFB30059BDD9 /* KeyboardBoundView.swift */; };
+		383564CA2499197D00432DB0 /* CommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383564C92499197D00432DB0 /* CommentViewController.swift */; };
 		3839F65224329818008180A3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3839F65124329817008180A3 /* GoogleService-Info.plist */; };
 		3839F6552432BB95008180A3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3839F6542432BB95008180A3 /* Constants.swift */; };
 		385783282483BD1F008088F0 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385783272483BD1F008088F0 /* LoginViewController.swift */; };
@@ -28,6 +32,10 @@
 		381F5FFE2431415100D3FD27 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		381F60002431434A00D3FD27 /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		381F60022431484900D3FD27 /* ThoughtViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThoughtViewController.swift; sourceTree = "<group>"; };
+		3823ABDA249B63230059BDD9 /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
+		3823ABDC249B72B10059BDD9 /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
+		3823ABDE249BBFB30059BDD9 /* KeyboardBoundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardBoundView.swift; sourceTree = "<group>"; };
+		383564C92499197D00432DB0 /* CommentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentViewController.swift; sourceTree = "<group>"; };
 		3839F65124329817008180A3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3839F6542432BB95008180A3 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		385783272483BD1F008088F0 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -62,6 +70,7 @@
 			isa = PBXGroup;
 			children = (
 				38BF1211246B2C670055BD5E /* Thought.swift */,
+				3823ABDC249B72B10059BDD9 /* Comment.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -71,6 +80,7 @@
 			children = (
 				381F60002431434A00D3FD27 /* NavigationController.swift */,
 				38BF120F246B17850055BD5E /* ThoughtTableViewCell.swift */,
+				3823ABDA249B63230059BDD9 /* CommentTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -82,6 +92,7 @@
 				381F5FFE2431415100D3FD27 /* MainViewController.swift */,
 				385783272483BD1F008088F0 /* LoginViewController.swift */,
 				385783292483C50D008088F0 /* CreateUserVC.swift */,
+				383564C92499197D00432DB0 /* CommentViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -90,6 +101,7 @@
 			isa = PBXGroup;
 			children = (
 				3839F6542432BB95008180A3 /* Constants.swift */,
+				3823ABDE249BBFB30059BDD9 /* KeyboardBoundView.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -270,9 +282,13 @@
 				38C8FECB243127EA00B64979 /* AppDelegate.swift in Sources */,
 				381F60012431434A00D3FD27 /* NavigationController.swift in Sources */,
 				38BF1212246B2C670055BD5E /* Thought.swift in Sources */,
+				3823ABDB249B63230059BDD9 /* CommentTableViewCell.swift in Sources */,
+				3823ABDD249B72B10059BDD9 /* Comment.swift in Sources */,
 				38C8FECD243127EA00B64979 /* SceneDelegate.swift in Sources */,
+				3823ABDF249BBFB30059BDD9 /* KeyboardBoundView.swift in Sources */,
 				381F5FFF2431415100D3FD27 /* MainViewController.swift in Sources */,
 				3839F6552432BB95008180A3 /* Constants.swift in Sources */,
+				383564CA2499197D00432DB0 /* CommentViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

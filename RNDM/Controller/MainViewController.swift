@@ -17,7 +17,7 @@ enum ThoughtCategory : String {
     case popular = "popular"
 }
 
-class MainViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
+class MainViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     private let thoughtTableView = UITableView()
     private var selectedCategory = ThoughtCategory.funny.rawValue
@@ -111,16 +111,16 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         setListener()
     }
     
-    @objc func addThought() {
-        let thoughtViewController = ThoughtViewController()
-        navigationController?.pushViewController(thoughtViewController, animated: true)
-    }
-    
     private func addButtons() {
         let thoughtButton = UIBarButtonItem(image: UIImage(named: "addThoughtIcon"), style: .done, target: self, action: #selector(addThought))
         let signoutButton = UIBarButtonItem(title: "Logout", style: .done, target: self, action: #selector(logoutButtonTapped))
         self.navigationItem.rightBarButtonItem  = thoughtButton
         self.navigationItem.leftBarButtonItem = signoutButton
+    }
+    
+    @objc private func addThought() {
+        let thoughtViewController = ThoughtViewController()
+        navigationController?.pushViewController(thoughtViewController, animated: true)
     }
     
     @objc private func logoutButtonTapped() {
@@ -170,4 +170,26 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             return UITableViewCell()
         }
     }
+    
+    
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    //    performSegue(withIdentifier: "CommentViewController", sender: thoughts[indexPath.row])
+        let thought = thoughts[indexPath.row]
+        let commentVC = CommentViewController()
+        navigationController?.pushViewController(commentVC, animated: true)
+        commentVC.thought = thought
+     //   self.show(commentVC, sender: self)
+    }
+
+    /*override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "CommentViewController" {
+             if let destinationVC = segue.destination as? CommentViewController {
+                 if let thought = sender as? Thought {
+                    destinationVC.thought = thought
+                }
+            }
+        }
+        
+    }*/
 }

@@ -17,12 +17,15 @@ class ThoughtTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         likesImageView.image = UIImage(named: "starIconFilled")
+        commentsImageView.image = UIImage(named: "commentIcon")
         
         self.contentView.addSubview(usernameLabel)
         self.contentView.addSubview(timestampLabel)
         self.contentView.addSubview(thoughtLabel)
         self.contentView.addSubview(likesImageView)
         self.contentView.addSubview(likesNumLabel)
+        self.contentView.addSubview(commentsImageView)
+        self.contentView.addSubview(commentsNumLabel)
         selectionStyle = .none
         setupTableViewCell()
         
@@ -74,6 +77,20 @@ class ThoughtTableViewCell: UITableViewCell {
         return label
     }()
     
+    let commentsImageView: UIImageView = {
+        let comment = UIImageView()
+        comment.translatesAutoresizingMaskIntoConstraints = false
+        return comment
+    }()
+    
+    let commentsNumLabel: UILabel = {
+       let label = UILabel()
+        label.font = UIFont(name: "AvenirNext", size: 14)
+        label.textColor = .darkGray
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     @objc func likeTapped() {
         Firestore.firestore().document("thoughts/\(thought.documentId!)")
         .updateData([NUM_LIKES : thought.numLikes + 1])
@@ -84,6 +101,7 @@ class ThoughtTableViewCell: UITableViewCell {
         usernameLabel.text = thought.username
         thoughtLabel.text = thought.thoughtText
         likesNumLabel.text = String(thought.numLikes)
+        commentsNumLabel.text = String(thought.numComments)
         
         let formatter = DateFormatter()
         formatter.dateFormat = "MMM d, hh:mm"
@@ -110,6 +128,15 @@ class ThoughtTableViewCell: UITableViewCell {
         likesNumLabel.leftAnchor.constraint(equalTo: likesImageView.rightAnchor, constant: 4).isActive = true
         likesNumLabel.centerYAnchor.constraint(equalTo: likesImageView.centerYAnchor).isActive = true
         likesNumLabel.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -20).isActive = true
+        
+        commentsImageView.widthAnchor.constraint(equalToConstant: 24).isActive = true
+        commentsImageView.heightAnchor.constraint(equalToConstant: 24).isActive = true
+        commentsImageView.leftAnchor.constraint(equalTo: likesNumLabel.rightAnchor, constant: 6).isActive = true
+        commentsImageView.topAnchor.constraint(equalTo: thoughtLabel.bottomAnchor, constant: 4).isActive = true
+        
+        commentsNumLabel.leftAnchor.constraint(equalTo: commentsImageView.rightAnchor, constant: 4).isActive = true
+        commentsNumLabel.centerYAnchor.constraint(equalTo: commentsImageView.centerYAnchor).isActive = true
+        commentsNumLabel.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -20).isActive = true
         
     }
 }
